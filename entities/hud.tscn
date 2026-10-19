@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ohgcw3q3fuqg"]
+
+[ext_resource type="Script" uid="uid://bi34ycmbjjjqp" path="res://scripts/hud.gd" id="1_cdv6k"]
+[ext_resource type="Texture2D" uid="uid://45y6kaiutvsv" path="res://assets/ui/icone_engrenagem.png" id="2_mcea6"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1354024945]
+script = ExtResource("1_cdv6k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1487128456]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 51.0
+offset_bottom = 44.0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=4031865]
+layout_mode = 2
+texture = ExtResource("2_mcea6")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=261907221]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "0 / 50"

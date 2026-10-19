@@ -16,13 +16,15 @@ const GOLPE_POS = {
 	"up": Vector2(0, -36),
 }
 
-@export var vida_maxima: int = 5
-@export var tempo_hurt: float = 0.5
+@export var vida_maxima: int = 10
+@export var tempo_hurt: float = 0.3          # tempo "atordoado": sem controle
+@export var tempo_invulneravel: float = 1.0  # tempo total sem levar dano (maior que o atordoamento)
 @export var dano_do_golpe: int = 1
 @export var quadro_do_golpe: int = 2
 
 var vida: int
 var tempo_no_hurt := 0.0
+var invulneravel := 0.0
 var facing := "down"  # down, up, left, right
 var golpe_aplicado := false
 
@@ -37,6 +39,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	atualizar_invulnerabilidade(delta)
+
 	match state:
 		State.IDLE:
 			state_idle(delta)
@@ -52,6 +56,15 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+# enquanto invulneravel, o personagem pisca; ao acabar, volta ao normal
+func atualizar_invulnerabilidade(delta: float) -> void:
+	if invulneravel > 0.0:
+		invulneravel -= delta
+		anim.modulate.a = 0.4 if int(invulneravel * 12.0) % 2 == 0 else 1.0
+	elif anim.modulate.a != 1.0:
+		anim.modulate.a = 1.0
+
+
 func read_direction() -> Vector2:
 	return Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
@@ -65,7 +78,9 @@ func update_facing(dir: Vector2) -> void:
 
 # quem chama e o inimigo; "origem" e a posicao dele (para empurrar o jogador)
 func levar_dano(quantidade: int, origem := Vector2.ZERO) -> void:
-	if state == State.HURT or state == State.DEAD:
+	# o atordoamento (HURT) acaba antes da invulnerabilidade: o jogador volta a ter
+	# controle mas ainda nao leva dano, senao ele fica preso apanhando em sequencia
+	if state == State.DEAD or invulneravel > 0.0:
 		return
 
 	vida -= quantidade
@@ -151,11 +166,12 @@ func state_attack(_delta: float) -> void:
 
 
 # ---------------- HURT ----------------
-# sai sozinho pelo tempo; enquanto dura, levar_dano() recusa dano (invulnerabilidade)
+# sai sozinho pelo tempo (atordoamento); a invulnerabilidade dura mais que ele
 
 func go_to_hurt(origem: Vector2) -> void:
 	state = State.HURT
 	tempo_no_hurt = 0.0
+	invulneravel = max(tempo_invulneravel, tempo_hurt)
 	area_golpe.monitoring = false  # se apanhou no meio do golpe, desliga a area
 	anim.modulate = Color(1, 0.4, 0.4)
 	anim.play("idle_" + facing)
