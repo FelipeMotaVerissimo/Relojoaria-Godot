@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://nwvkjyt11pwy"]
+
+[ext_resource type="Script" uid="uid://4r76woodewbc" path="res://scripts/jogador.gd" id="1_m0gj8"]
+[ext_resource type="SpriteFrames" uid="uid://bxb8btximx0ow" path="res://entities/heroi_frames.tres" id="2_mi7s2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwwoi"]
+size = Vector2(13, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hlrot"]
+size = Vector2(32, 32)
+
+[node name="Jogador" type="CharacterBody2D" unique_id=203460044 groups=["player"]]
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_m0gj8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1565877338]
+sprite_frames = ExtResource("2_mi7s2")
+animation = &"idle_down"
+offset = Vector2(2, -17)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2126367122]
+position = Vector2(1.5, -1)
+shape = SubResource("RectangleShape2D_iwwoi")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1700242878]
+position = Vector2(2, -16)
+limit_left = 0
+limit_top = 0
+limit_right = 650
+limit_bottom = 192
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="AreaGolpe" type="Area2D" parent="." unique_id=2013350420]
+collision_layer = 8
+collision_mask = 4
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaGolpe" unique_id=1199083438]
+shape = SubResource("RectangleShape2D_hlrot")
