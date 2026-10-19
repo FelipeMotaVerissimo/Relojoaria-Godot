@@ -1,6 +1,9 @@
 extends CharacterBody2D
 
-enum State { IDLE, RUN, ATTACK }
+signal vida_mudou(vida: int, maxima: int)
+signal morreu
+
+enum State { IDLE, RUN, ATTACK, HURT, DEAD }
 var state: State = State.IDLE
 
 const SPEED = 80.0
@@ -13,9 +16,13 @@ const GOLPE_POS = {
 	"up": Vector2(0, -36),
 }
 
+@export var vida_maxima: int = 5
+@export var tempo_hurt: float = 0.5
 @export var dano_do_golpe: int = 1
 @export var quadro_do_golpe: int = 2
 
+var vida: int
+var tempo_no_hurt := 0.0
 var facing := "down"  # down, up, left, right
 var golpe_aplicado := false
 
@@ -24,6 +31,8 @@ var golpe_aplicado := false
 
 
 func _ready() -> void:
+	vida = vida_maxima
+	vida_mudou.emit(vida, vida_maxima)
 	go_to_idle()
 
 
@@ -35,6 +44,10 @@ func _physics_process(delta: float) -> void:
 			state_run(delta)
 		State.ATTACK:
 			state_attack(delta)
+		State.HURT:
+			state_hurt(delta)
+		State.DEAD:
+			pass
 
 	move_and_slide()
 
@@ -50,11 +63,28 @@ func update_facing(dir: Vector2) -> void:
 		facing = "down" if dir.y > 0 else "up"
 
 
+# quem chama e o inimigo; "origem" e a posicao dele (para empurrar o jogador)
+func levar_dano(quantidade: int, origem := Vector2.ZERO) -> void:
+	if state == State.HURT or state == State.DEAD:
+		return
+
+	vida -= quantidade
+	print("vida: ", vida)  # TEMPORARIO -- apague quando tiver o HUD
+	vida_mudou.emit(vida, vida_maxima)
+	if vida <= 0:
+		go_to_dead()
+		return
+
+	go_to_hurt(origem)
+	return
+
+
 # ---------------- IDLE ----------------
 
 func go_to_idle() -> void:
 	state = State.IDLE
 	velocity = Vector2.ZERO
+	anim.modulate = Color.WHITE
 	anim.play("idle_" + facing)
 	return
 
@@ -111,10 +141,52 @@ func state_attack(_delta: float) -> void:
 		golpe_aplicado = true
 		for corpo in area_golpe.get_overlapping_bodies():
 			if corpo != self and corpo.has_method("levar_dano"):
-				corpo.levar_dano(dano_do_golpe)
+				corpo.levar_dano(dano_do_golpe, global_position)
 
 	# o estado termina quando a animacao acaba (por isso ela nao pode estar em loop)
 	if not anim.is_playing():
 		area_golpe.monitoring = false
 		go_to_idle()
 		return
+
+
+# ---------------- HURT ----------------
+# sai sozinho pelo tempo; enquanto dura, levar_dano() recusa dano (invulnerabilidade)
+
+func go_to_hurt(origem: Vector2) -> void:
+	state = State.HURT
+	tempo_no_hurt = 0.0
+	area_golpe.monitoring = false  # se apanhou no meio do golpe, desliga a area
+	anim.modulate = Color(1, 0.4, 0.4)
+	anim.play("idle_" + facing)
+
+	var dir := Vector2.ZERO
+	if origem != Vector2.ZERO:
+		dir = (global_position - origem).normalized()
+	velocity = dir * 130.0
+	return
+
+
+func state_hurt(delta: float) -> void:
+	tempo_no_hurt += delta
+	velocity = velocity.move_toward(Vector2.ZERO, 500.0 * delta)
+	if tempo_no_hurt >= tempo_hurt:
+		go_to_idle()
+		return
+
+
+# ---------------- DEAD ----------------
+# estado sem saida: nao existe animacao de morte no pacote, entao ele some em fade
+
+func go_to_dead() -> void:
+	state = State.DEAD
+	velocity = Vector2.ZERO
+	area_golpe.monitoring = false
+	anim.modulate = Color(1, 0.4, 0.4)
+	anim.play("idle_" + facing)
+	set_physics_process(false)
+	morreu.emit()
+
+	var t := create_tween()
+	t.tween_property(anim, "modulate:a", 0.0, 0.8)
+	return

@@ -1,0 +1,80 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ckd52fponu7uw"]
+
+[ext_resource type="Texture2D" uid="uid://1i4tt27jqall" path="res://assets/enemies/engrenagem_furiosa_verde.png" id="1_girar"]
+[ext_resource type="Texture2D" uid="uid://bc4vvd1ajbj65" path="res://assets/fx/explosao_engrenagens.png" id="2_boom"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explodir_0"]
+atlas = ExtResource("2_boom")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explodir_1"]
+atlas = ExtResource("2_boom")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explodir_2"]
+atlas = ExtResource("2_boom")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explodir_3"]
+atlas = ExtResource("2_boom")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_explodir_4"]
+atlas = ExtResource("2_boom")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_girar_0"]
+atlas = ExtResource("1_girar")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_girar_1"]
+atlas = ExtResource("1_girar")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_girar_2"]
+atlas = ExtResource("1_girar")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_girar_3"]
+atlas = ExtResource("1_girar")
+region = Rect2(48, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explodir_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explodir_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explodir_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explodir_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_explodir_4")
+}],
+"loop": 0,
+"name": &"explodir",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_girar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_girar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_girar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_girar_3")
+}],
+"loop": 1,
+"name": &"girar",
+"speed": 10.0
+}]
