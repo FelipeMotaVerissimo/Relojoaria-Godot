@@ -8,9 +8,9 @@ script = ExtResource("1_cdv6k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1487128456]
 offset_left = 4.0
-offset_top = 30.0
+offset_top = 17.0
 offset_right = 51.0
-offset_bottom = 70.0
+offset_bottom = 57.0
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=4031865]
 layout_mode = 2

@@ -25,6 +25,8 @@ func atualizar_vida(vida: int, maxima: int) -> void:
 	while vidas.get_child_count() < maxima:
 		var c := TextureRect.new()
 		c.texture = ICONE_CORACAO
+		c.stretch_mode = TextureRect.STRETCH_KEEP
+		c.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 		vidas.add_child(c)
 
 	# coracao perdido fica escuro
