@@ -8,9 +8,9 @@ script = ExtResource("1_cdv6k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1487128456]
 offset_left = 4.0
-offset_top = 4.0
+offset_top = 30.0
 offset_right = 51.0
-offset_bottom = 44.0
+offset_bottom = 70.0
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=4031865]
 layout_mode = 2
@@ -21,3 +21,29 @@ stretch_mode = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 text = "0 / 50"
+
+[node name="Vidas" type="HBoxContainer" parent="." unique_id=798795572]
+offset_left = 4.0
+offset_right = 44.0
+offset_bottom = 40.0
+theme_override_constants/separation = 2
+
+[node name="TelaFim" type="ColorRect" parent="." unique_id=2134758421]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.003921569, 0.003921569, 0.003921569, 0.25490198)
+
+[node name="Texto" type="Label" parent="TelaFim" unique_id=1767114843]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Vitória"
+horizontal_alignment = 1
+vertical_alignment = 1

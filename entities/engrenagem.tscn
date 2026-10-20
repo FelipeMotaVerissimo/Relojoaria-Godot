@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://lv0fsqvm20rn"]
 
 [ext_resource type="Script" uid="uid://b3qbyvfjixrcd" path="res://scripts/inimigo.gd" id="1_2wwmu"]
-[ext_resource type="SpriteFrames" path="res://entities/engrenagem_frames.tres" id="2_ecjit"]
+[ext_resource type="SpriteFrames" uid="uid://ckd52fponu7uw" path="res://entities/engrenagem_frames.tres" id="2_ecjit"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hlrot"]
 radius = 8.0

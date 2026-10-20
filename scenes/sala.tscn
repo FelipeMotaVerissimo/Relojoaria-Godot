@@ -26,8 +26,6 @@ tile_set = ExtResource("1_uox7l")
 position = Vector2(43, 80)
 
 [node name="HUD" parent="." unique_id=1354024945 instance=ExtResource("4_ml4em")]
-scale = Vector2(0.7, 0.7)
-transform = Transform2D(0.7, 0, 0, 0.7, 0, 0)
 
 [node name="Spawner" type="Node2D" parent="." unique_id=270964204]
 script = ExtResource("5_ml4em")
