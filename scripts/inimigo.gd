@@ -10,6 +10,7 @@ var state: State = State.CHASE
 @export var velocidade: float = 45.0
 @export var dano: int = 1
 @export var tempo_hurt: float = 0.2
+@export var empurrao: float = 120.0  # inimigos pesados usam um valor menor
 
 var vida: int
 var tempo_no_hurt := 0.0
@@ -85,7 +86,7 @@ func go_to_hurt(origem: Vector2) -> void:
 	var dir := Vector2.ZERO
 	if origem != Vector2.ZERO:
 		dir = (global_position - origem).normalized()
-	velocity = dir * 120.0
+	velocity = dir * empurrao
 	return
 
 

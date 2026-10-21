@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c4jw6a6fwd1mr"]
+
+[ext_resource type="Script" uid="uid://b3qbyvfjixrcd" path="res://scripts/inimigo.gd" id="1_ufaua"]
+[ext_resource type="SpriteFrames" uid="uid://b1g5nvsy6kw01" path="res://entities/titan_frames.tres" id="2_t8gmi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hlrot"]
+radius = 17.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ufaua"]
+radius = 18.0
+
+[node name="Titan" type="CharacterBody2D" unique_id=254361449]
+collision_layer = 4
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_ufaua")
+vida_maxima = 4
+velocidade = 28.0
+dano = 2
+empurrao = 40.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=377805115]
+sprite_frames = ExtResource("2_t8gmi")
+animation = &"girar"
+frame_progress = 0.08062734
+offset = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1893525519]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_hlrot")
+
+[node name="AreaContato" type="Area2D" parent="." unique_id=706884153]
+collision_layer = 16
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaContato" unique_id=1657860246]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_ufaua")
