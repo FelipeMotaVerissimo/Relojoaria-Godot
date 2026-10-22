@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://blg7dorvdt6um"]
+
+[ext_resource type="Script" uid="uid://bxk3s8mjdfej5" path="res://scripts/lata.gd" id="1_2wbqe"]
+[ext_resource type="Texture2D" uid="uid://b6ije5m6m7g7e" path="res://assets/items/lata_de_oleo.png" id="2_o5s7g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hlrot"]
+radius = 9.0
+
+[node name="LataDeOleo" type="Area2D" unique_id=432626354]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_2wbqe")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2006797015]
+texture = ExtResource("2_o5s7g")
+offset = Vector2(0, -6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1155818509]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_hlrot")

@@ -92,6 +92,12 @@ func levar_dano(quantidade: int, origem := Vector2.ZERO) -> void:
 
 	go_to_hurt(origem)
 	return
+	
+func curar(quantidade: int) -> void:
+	if state == State.DEAD:
+		return
+	vida = mini(vida + quantidade, vida_maxima)
+	vida_mudou.emit(vida, vida_maxima)
 
 
 # ---------------- IDLE ----------------
